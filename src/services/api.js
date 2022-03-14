@@ -1,6 +1,9 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const baseUrl = 'http://192.168.0.12:8000/api';
+//Teste
+const baseUrl = 'http://comunidadeblog.ga/api';
+//Local
+//const baseUrl = 'http://192.168.0.6:8000/api';
 
 const request = async (method, endpoint, params, token = null) => {
   method = method.toLowerCase();
@@ -19,7 +22,7 @@ const request = async (method, endpoint, params, token = null) => {
       break;
   }
 
-  let headers = { "Content-Type": "application/json" };
+  let headers = { 'Content-Type': 'application/json' };
   if (token) {
     headers.Authorization = `Bearer ${token}`;
   }
@@ -53,5 +56,18 @@ export default {
       cod_culto, cod_campanha, nome, idade, email, telefone, sexo, estado_civil
     });
     return json;
-  }
+  },
+  listaVisitantes: async () => {
+    let token = await AsyncStorage.getItem('token');
+    let json = await request('get', '/lista-visitantes',{}, token);
+    return json;
+  },
+  listaCampanhas: async () => {
+    let json = await request('get', '/lista/campanhas',{});
+    return json;
+  },
+  listaCultos: async () => {
+    let json = await request('get', '/lista/cultos',{});
+    return json;
+  },
 };

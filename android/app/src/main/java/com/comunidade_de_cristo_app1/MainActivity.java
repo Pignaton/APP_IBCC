@@ -1,7 +1,9 @@
-package com.comunidade_de_cristo_1;
+package com.comunidade_de_cristo_app1;
 
 import com.facebook.react.ReactActivity;
 import android.os.Bundle;
+
+import com.BV.LinearGradient.LinearGradientPackage; // <--- This!
 
 public class MainActivity extends ReactActivity {
 
@@ -11,11 +13,11 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "comunidade_de_cristo_1";
+    return "comunidade_de_cristo_app1";
   }
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(null);
   }
+
 }

@@ -4,7 +4,7 @@ import PreloadScreen from '../screens/PreloadScreen';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import ChoosePropertyScreen from '../screens/ChoosePropertyScreen';
-import MainDrawer from '../stacks/MainDrawer';
+import MainDrawer from './MainDrawer'
 
 const Stack = createNativeStackNavigator();
 

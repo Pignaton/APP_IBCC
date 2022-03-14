@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.comunidade_de_cristo_1">
+  package="com.comunidade_de_cristo_app1">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
