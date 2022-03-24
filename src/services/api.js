@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //Teste
-const baseUrl = 'http://comunidadeblog.ga/api';
+const baseUrl = "http://comunidadeblog.ga/api";
 //Local
 //const baseUrl = 'http://192.168.0.6:8000/api';
 
@@ -22,7 +22,7 @@ const request = async (method, endpoint, params, token = null) => {
       break;
   }
 
-  let headers = { 'Content-Type': 'application/json' };
+  let headers = { "Accept": "application/json",  "Content-Type": "application/json"};
   if (token) {
     headers.Authorization = `Bearer ${token}`;
   }
@@ -34,40 +34,63 @@ const request = async (method, endpoint, params, token = null) => {
 
 export default {
   getToken: async () => {
-    return await AsyncStorage.getItem('token');
+    return await AsyncStorage.getItem("token");
   },
   validateToken: async () => {
-    let token = await AsyncStorage.getItem('token');
-    let json = await request('post', '/auth/validacao', {}, token);
+    let token = await AsyncStorage.getItem("token");
+    let json = await request("post", "/auth/validacao", {}, token);
     return json;
   },
   login: async (email, senha) => {
-    let json = await request('post', '/auth/login', { email, senha });
+    let json = await request("post", "/auth/login", { email, senha });
     return json;
   },
   logout: async () => {
-    let token = await AsyncStorage.getItem('token');
-    let json = await request('post', '/auth/logout',{}, token);
-    await AsyncStorage.removeItem('token');
+    let token = await AsyncStorage.getItem("token");
+    let json = await request("post", "/auth/logout", {}, token);
+    await AsyncStorage.removeItem("token");
     return json;
   },
-  register: async (cod_culto, cod_campanha, nome, idade, email, telefone, sexo, estado_civil) => {
-    let json = await request('post', '/registro',{
-      cod_culto, cod_campanha, nome, idade, email, telefone, sexo, estado_civil
+  cadastro: async (culto, campanha, nome, idade, email, telefone, sexo, estado_civil, cep, endereco, bairro, numero, complemento, estado, uf) => {
+    let json = await request("post", "/cadastro", {
+      culto,
+      campanha,
+      nome,
+      idade,
+      email,
+      telefone,
+      sexo,
+      estado_civil,
+      cep,
+      endereco,
+      bairro,
+      numero,
+      complemento,
+      estado,
+      uf,
     });
     return json;
   },
   listaVisitantes: async () => {
-    let token = await AsyncStorage.getItem('token');
-    let json = await request('get', '/lista-visitantes',{}, token);
+    let token = await AsyncStorage.getItem("token");
+    let json = await request("get", "/lista/visitantes", {}, token);
+    return json;
+  },
+  deletaVisitante: async (cod_pessoa) => {
+    let token = await AsyncStorage.getItem("token");
+    let json = await request("delete", `/visitante/deleta/${cod_pessoa}`, {}, token);
     return json;
   },
   listaCampanhas: async () => {
-    let json = await request('get', '/lista/campanhas',{});
+    let json = await request("get", "/lista/campanhas", {});
     return json;
   },
   listaCultos: async () => {
-    let json = await request('get', '/lista/cultos',{});
+    let json = await request("get", "/lista/cultos", {});
     return json;
   },
+  exibeCampo: async () => {
+    let json = await request("get", '/sistema/exibe-campos', {});
+    return json;
+  }
 };

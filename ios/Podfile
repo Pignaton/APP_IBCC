@@ -12,6 +12,8 @@ target 'comunidade_de_cristo_app1' do
     :hermes_enabled => false
   )
 
+  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+
   target 'comunidade_de_cristo_app1Tests' do
     inherit! :complete
     # Pods for testing

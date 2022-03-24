@@ -1,14 +1,15 @@
 import styled from "styled-components/native";
 
 export default {
+  ScrollView: styled.ScrollView``,
   Container: styled.SafeAreaView`
     flex: 1;
     padding: 20px;
-    background-color: #F5F6FA;
+    background-color: #F5F6FA; /*#F5F6FA*/
   `,
   Logo: styled.Image`
     width: 250px;
-    height: 150px;
+    height: 10px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
@@ -16,7 +17,7 @@ export default {
 
   Titulo: styled.View`
     justify-content: space-around;
-    align-items: flex-start;
+    align-items: center;
     font-size: 18px;
     margin: 10px;
     padding-bottom: 10px;
@@ -32,37 +33,6 @@ export default {
   `,
   Texto: styled.Text`
     color: #A7A7A7;
-    font-family:Roboto-Bold;
-  `,
-  Field: styled.TextInput.attrs({
-    placeholderTextColor: "#BDBDBD",
-  })`
-    border-width: 1px;
-    border-color: #BDBDBD;
-    /*background-color:#F5F6FA;*/
-    background-color: #F5F5F5;
-    border-radius: 5px;
-    color:#000;
-    font-size:15px;
-    margin-bottom:15px;
-    padding: 15px;
-  `,
-  View: styled.View`
-    flex-direction: row;
-    justify-content: space-between;
-    padding-bottom: 15px;
-  `,
-  Checkbox: styled.View`
-    flex-direction: row;
-  `,
-  TextoCheckbox: styled.Text`
-    margin-top: 8px;
-    color:#000;
-    font-family: Roboto-Bold;
-  `,
-  Senha: styled.Text`
-    margin-top:8px;
-    color:#55A1DC;
     font-family: Roboto-Bold;
   `,
   ButtonArea: styled.TouchableOpacity`
@@ -71,13 +41,20 @@ export default {
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    margin-bottom: 15px;
+    margin-top: 15px;
   `,
   ButtonText: styled.Text`
-    color:#FFF;
-    font-size:15px;
+    color: #FFF;
+    font-size: 15px;
     font-weight: bold;
     font-family:Roboto-Bold;
   `,
 
+  Erro: styled.Text`
+    text-align: center;
+    color:#F08585;
+    font-family:Roboto-Bold;
+    position: relative;
+    
+  `,
 };

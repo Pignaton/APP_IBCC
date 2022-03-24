@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
-import Icon from "react-native-vector-icons/FontAwesome";
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from "@react-navigation/native";
 import { useStateValue } from "../contexts/StateContext";
 import api from "../services/api";
@@ -14,10 +14,6 @@ const DrawerLogoArea = styled.View`
   border-bottom-width: 1px;
   border-bottom-color: #EEE;
 `;
-const DrawerLogo = styled.Image`
-  width: 190px;
-  height: 40px;
-`;
 const DrawerScroller = styled.ScrollView`
   flex: 1;
   margin: 20px 0;
@@ -26,7 +22,7 @@ const ChangeUnitArea = styled.View`
   margin: 10px;
 `;
 const ChangeUnitButton = styled.TouchableOpacity`
-  background-color: #8863E6;
+  background-color: #55A1DC /*#8863E6*/;
   padding: 12px;
   justify-content: center;
   align-items: center;
@@ -86,14 +82,13 @@ export default (props) => {
     await api.logout();
     navigation.reset({
       index: 1,
-      routes: [{ name: "LoginScreen" }],
+      routes: [{ name: "HomeScreen" }],
     });
   };
 
   return (
     <DrawerArea>
       <DrawerLogoArea>
-        <DrawerLogo source="" resizeMode="contain" />
       </DrawerLogoArea>
       <DrawerScroller>
         {menus.map((item, index)=>(
@@ -112,7 +107,7 @@ export default (props) => {
       <FooterArea>
         <FooterInfo>
           <FooterProfile>Olá, {context.user.user.nome}</FooterProfile>
-          <FooterUnitText>Teste do teste</FooterUnitText>
+          <FooterUnitText></FooterUnitText>
         </FooterInfo>
         <FooterUnitButton onPress={() => navigation.navigate('ConfiguracaoScreen')}>
           <Icon name="gear" size={24} color="#666E78" />

@@ -30,7 +30,7 @@ export default () => {
       } else {
         navigation.reset({
           index: 1,
-          routes: [{ name: "LoginScreen" }],
+          routes: [{ name: "HomeScreen" }],
         });
       }
     };

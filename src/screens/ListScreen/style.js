@@ -1,15 +1,17 @@
 import styled from "styled-components/native";
 
 export default {
-  Container: styled.SafeAreaView`
+  Container: styled.View`
     flex: 1;
     background-color: #F5F6FA;
+    padding: 10px;
   }
   `,
-  Scroller: styled.ScrollView`
+  /*Scroller: styled.ScrollView`
     flex: 1;
     padding: 20px;
-  `,
+
+  `,*/
   LoadingIcon: styled.ActivityIndicator``,
   NoListaArea: styled.View`
     justify-content: center;
@@ -20,4 +22,5 @@ export default {
     font-size: 15px;
     color: #000;
   `,
+  List: styled.FlatList``,
 };
