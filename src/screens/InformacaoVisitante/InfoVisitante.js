@@ -16,6 +16,8 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from "@react-navigation/native";
+import Funcoes from "../../functions/funcoes";
+
 export default function App() {
 
   const navigation = useNavigation();
@@ -23,6 +25,7 @@ export default function App() {
   useEffect(() => {
     navigation.setOptions({
       headerTitle: "Informações do Visitante",
+      headerTintColor: '#000',
     });
   });
 
@@ -72,11 +75,11 @@ export default function App() {
           </View>
           <View style={styles.body}>
             <Text style={styles.label}>Genero</Text>
-            <Text style={styles.campo}>{json.sexo}</Text>
+            <Text style={styles.campo}>{json.sexo == 'M'? 'Masculino':'Feminino'}</Text>
           </View>
           <View style={styles.body}>
             <Text style={styles.label}>Estado Civil</Text>
-            <Text style={styles.campo}>{json.estado_civil}</Text>
+            <Text style={styles.campo}>{Funcoes.estadoCivil(json.estado_civil)}</Text>
           </View>
         </View>
         <View style={styles.body}>
@@ -133,11 +136,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: 'bold',
     color: '#FFF',
-  },
-  idade: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#9c9db9',
   },
   headerBody: {},
   body: {

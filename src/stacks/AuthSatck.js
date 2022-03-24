@@ -74,7 +74,7 @@ export default () => {
       <Stack.Screen
         name="MapsPequenosGruposScreen"
         component={MapsPequenosGruposScreen}
-        options={{ headerShown: true }}
+        options={{ headerShown: false, headerShadowVisible: true }}
       />
     </Stack.Navigator>
   );

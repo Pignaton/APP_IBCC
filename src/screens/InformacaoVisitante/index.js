@@ -26,10 +26,11 @@ export default function App() {
   return (
     <Tab.Navigator>
       <Tab.Screen
-        name="Home"
+        name="Mapa"
         component={MapsPequenosGrupos}
         options={{
-          headerShown: false,
+          headerShown: true,
+          headerShadowVisible: true,
           tabBarIcon: ({ color, size }) => (
             <Icon name="map" color={color} size={size} />
           ),

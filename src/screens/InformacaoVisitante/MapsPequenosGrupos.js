@@ -35,17 +35,19 @@ export default function App() {
 
   useEffect(() => {
     navigation.setOptions({
-      headerTitle: "Informações do Visitante",
+      headerTitle: "Mapa dos PGs",
+      headerShown: false,
+      headerShadowVisible: false,
     });
   });
 
   const bottomSheetRef = useRef(null);
   const bottomSheetModalRef = useRef(null);
   // variables
-  const snapPoints = useMemo(() => ["5%", "50%"], []);
+  const snapPoints = useMemo(() => ['5%', '50%'], []);
   // callbacks
   const handleSheetChanges = useCallback((index: number) => {
-    console.log("handleSheetChanges", index);
+    console.log('handleSheetChanges', index);
   }, []);
 
   const handlePresentModalPress = useCallback(() => {
@@ -66,19 +68,23 @@ export default function App() {
   const json = [
     {
       cod_pequeno_grupo: 1,
+      nom_lider: 'Fulano de tal',
       nome_grupo: " Pg Legal",
+      tipo_pequeno_grupo: 'A',
+      pequeno_grupo_genero: 'M',
       qtd: 9,
       latitude: -23.5920485,
       longitude: -46.5411571,
-      cep: "03283060",
     },
     {
       cod_pequeno_grupo: 2,
+      nom_lider: 'Vinicius Andrade',
       nome_grupo: " Alcáteia",
+      tipo_pequeno_grupo: 'J',
+      pequeno_grupo_genero: 'H',
       qtd: 6,
       latitude: -23.5890176,
       longitude: -46.5415476,
-      cep: "03008030",
     },
   ];
 
@@ -104,22 +110,7 @@ export default function App() {
         ))}
       </MapView>
       <BottomSheetModalProvider>
-        <BottomSheetModal
-          ref={bottomSheetModalRef}
-          index={1}
-          snapPoints={snapPoints}
-          onChange={handleSheetChanges}>
-          <Text>Nome do PG</Text>
-          <Text>Nome do Lider</Text>
-          <View style={styles.close}>
-            <Icon
-              name="times"
-              size={20}
-              color="#fff"
-              onPress={handleDismissPress}
-            />
-          </View>
-        </BottomSheetModal>
+
         <BottomSheet
           ref={bottomSheetRef}
           index={1}
@@ -133,13 +124,11 @@ export default function App() {
                 fontWeight: "bold",
                 textAlign: "center",
                 paddingBottom: 5,
+                color: "#000"
               }}>
               Pgs Relacionados para esse visitantes
             </Text>
           </View>
-          <BottomSheetView>
-            <Button title="Press me" onPress={handlePresentModalPress} />
-          </BottomSheetView>
 
           <BottomSheetFlatList
             data={json}
@@ -159,19 +148,10 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     padding: 10,
-    backgroundColor: "white",
-  },
-  close: {
-    width: 35,
-    height: 35,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 50,
-    border: 1,
-    backgroundColor: "#CCC",
+    backgroundColor: 'white',
   },
   map: {
-    flex: 1, //the container will fill the whole screen.
+    flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
