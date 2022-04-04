@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Text, StyleSheet, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
 import C from './style';
 import { DefaultTheme, TextInput } from 'react-native-paper';
 import FlashMessage, { showMessage } from 'react-native-flash-message';
 
 export default () => {
+
+  const navigation = useNavigation();
 
   const theme = {
     roundness: 10,
@@ -20,6 +23,9 @@ export default () => {
 
   showMessage({ type: 'danger', icon: 'danger', message: "Ops, problema.", description: 'Email não encontrado.',duration: false  });
 
+  const handleLembrouSenha = () => {
+    navigation.navigate('LoginScreen');
+  }
   return (
     <C.Container>
       <C.Logo />
@@ -33,21 +39,15 @@ export default () => {
       <TextInput
         mode="outlined"
         label="Email"
-        keyBoardType="email"
-        left={<TextInput.Icon name="email" />}
+        keyBoardType={"email"}
         value={email}
         onChangeText={(t) => setEmail(t)}
         theme={theme}
         error={userError}
       />
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          paddingBottom: 15,
-        }}>
-        <C.Senha style={styles.font}>Lembrou da senha?</C.Senha>
-      </View>
+      <C.SenhaArea>
+        <C.Senha style={styles.font} onPress={handleLembrouSenha}>Lembrou da senha?</C.Senha>
+      </C.SenhaArea>
       <C.ButtonArea onPress={() => setUserError((value) => !value)}>
         <C.ButtonText style={styles.font}>ENVIAR LINK</C.ButtonText>
       </C.ButtonArea>

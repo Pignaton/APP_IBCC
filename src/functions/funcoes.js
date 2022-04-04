@@ -27,7 +27,7 @@ export default {
         param = "Domingo";
         break;
       default:
-        alert("Parametro inválido");
+        param = "";
     }
     return param;
   },
@@ -46,7 +46,7 @@ export default {
         param = "integral";
         break;
       default:
-        alert('Parametro inválido');
+        param = "";
     }
     return param;
   },
@@ -69,6 +69,41 @@ export default {
         break;
       case "D":
         param = "Divorciado(a)";
+        break;
+      default:
+        param = "Não informado";
+    }
+    return param;
+  },
+  TipoDeGrupo: (param) => {
+    switch (param) {
+      case "A":
+        param = "Adulto";
+        break;
+      case "B":
+        param = "Jovem";
+        break;
+      case "C":
+        param = "Criança";
+        break;
+      case "D":
+        param = "Casados";
+        break;
+      default:
+        param = "Não informado";
+    }
+    return param;
+  },
+  TipoDeGrupoGenero: (param) => {
+    switch (param) {
+      case "M":
+        param = "Mulheres";
+        break;
+      case "H":
+        param = "Homens";
+        break;
+      case "O":
+        param = "Misto";
         break;
       default:
         param = 'Não informado';

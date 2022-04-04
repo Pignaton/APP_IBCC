@@ -26,7 +26,7 @@ export default {
     background-color: transparent;
   `,
   TextoLogin: styled.Text`
-    color:#000;
+    color:#55A1DC;
     margin-bottom:5px;
     font-size:25px;
     font-family:Fredoka-Bold;

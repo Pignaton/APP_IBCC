@@ -1,27 +1,75 @@
-import React, {
-  useState,
-  useEffect,
-  useMemo,
-  useRef,
-  useCallback,
-} from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import React, { useMemo, useRef, useCallback } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import BottomSheet, {
-  BottomSheetView,
-  BottomSheetModal,
-  BottomSheetModalProvider,
-} from "@gorhom/bottom-sheet";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import styled from "styled-components/native";
+import Funcao from "../functions/funcoes";
 
-const App = ({ data }) => {
+const BotaoClose = styled.TouchableHighlight`
+  width: 35px;
+  height: 35px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  border-color: transparent;
+  background-color: #CCC;
+  margin-right: 15px;
+`;
+const Box = styled.TouchableOpacity`
+  background-color: #FFF;
+  border-radius: 10px;
+  border-width: 2px;
+  border-color: #E8E9ED;
+  padding: 15px;
+  margin: 10px;
+`;
+
+const HeaderArea = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+
+const InfoArea = styled.View`
+  margin-left: 15px;
+  flex: 1;
+`;
+
+const Title = styled.Text`
+  font-size: 17px;
+  font-weight: bold;
+  color: #000;
+`;
+
+const Date = styled.Text`
+  font-size: 14px;
+  font-weight: bold;
+  color: #9c9db9;
+`;
+const HeaderSheet = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+`;
+const HeaderSheetBox = styled.View`
+  margin-left: 25px;
+`;
+const Body = styled.View`
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+`;
+const Texto = styled.Text`
+  font-size: 14px;
+  font-weight: bold;
+  color: #9c9db9;
+  padding: 10px;
+`;
+
+
+export default ({ data }) => {
   const bottomSheetModalRef = useRef(null);
   // variables
-  const snapPoints = useMemo(() => ["5%", "50%"], []);
-  // callbacks
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log("handleSheetChanges", index);
-  }, []);
+  const snapPoints = useMemo(() => ["5%", "40%"], []);
 
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
@@ -32,109 +80,41 @@ const App = ({ data }) => {
   }, []);
   return (
     <>
-      <TouchableOpacity onPress={handlePresentModalPress}
-                        style={styles.box}
-                        key={data}>
-        <View style={styles.headerArea}>
+      <Box
+        onPress={handlePresentModalPress}
+        key={data}>
+        <HeaderArea>
           <Icon name="users" size={15} color="#8863e7" />
-          <View style={styles.infoArea}>
-            <Text style={styles.title}>{data.nome_grupo}</Text>
-            <Text style={styles.date}>{data.qtd} integrantes</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
+          <InfoArea>
+            <Title>{data.nome_grupo}</Title>
+            <Date>{data.qtd} integrantes</Date>
+          </InfoArea>
+        </HeaderArea>
+      </Box>
       <BottomSheetModal
         ref={bottomSheetModalRef}
         index={1}
-        snapPoints={snapPoints}
-        onChange={handleSheetChanges}>
-        <View style={styles.headerSheet}>
-          <View style={styles.headerSheetBox}>
-            <Text style={styles.title}>{data.nome_grupo}</Text>
-            <Text style={styles.date}>{data.nom_lider}</Text>
-          </View>
-          <View style={styles.close}>
+        snapPoints={snapPoints}>
+        <HeaderSheet>
+          <HeaderSheetBox>
+            <Title>{data.nome_grupo}</Title>
+            <Date>{data.nom_lider}</Date>
+          </HeaderSheetBox>
+          <BotaoClose>
             <Icon
               name="times"
               size={20}
               color="#fff"
               onPress={handleDismissPress}
             />
-          </View>
-        </View>
-        <View style={styles.body}>
-          <Text style={styles.texto}>Tipo: {data.tipo_pequeno_grupo}</Text>
-          <Text style={styles.texto}>Pequeno grupo de: {data.pequeno_grupo_genero}</Text>
-          <Text style={styles.texto}>{data.qtd} integrantes</Text>
-        </View>
+          </BotaoClose>
+        </HeaderSheet>
+        <Body>
+          <Texto>Grupo de {Funcao.TipoDeGrupo(data.tipo_pequeno_grupo)}</Texto>
+          <Texto>Pequeno grupo de {Funcao.TipoDeGrupoGenero(data.pequeno_grupo_genero)}</Texto>
+          <Texto>{data.qtd} integrantes</Texto>
+        </Body>
       </BottomSheetModal>
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  contentContainer: {
-    padding: 10,
-    backgroundColor: "white",
-  },
-  close: {
-    width: 35,
-    height: 35,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 50,
-    border: 1,
-    backgroundColor: "#CCC",
-    marginRight: 15,
-  },
-  box: {
-    backgroundColor: "#FFF",
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: "#E8E9ED",
-    padding: 15,
-    marginBottom: 10,
-  },
-  headerArea: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  infoArea: {
-    marginLeft: 15,
-    flex: 1,
-  },
-  title: {
-    fontSize: 17,
-    fontWeight: "bold",
-    color: "#000",
-  },
-  date: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#9c9db9",
-  },
-  headerSheet: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 10,
-  },
-  headerSheetBox: {
-    marginLeft: 25,
-  },
-  body: {
-    alignItems:'center',
-    justifyContent:'center',
-    padding: 15
-  },
-  texto: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#9c9db9",
-    padding: 10
-  }
-});
-
-export default App;

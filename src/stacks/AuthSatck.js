@@ -6,10 +6,9 @@ import PreloadScreen from "../screens/PreloadScreen";
 import LoginScreen from "../screens/LoginScreen";
 import RecuperaSenhaScreen from "../screens/LoginScreen/recuperar-senha";
 import CadastroScreen from "../screens/CadastroScreen";
+import CriaContaScreen from "../screens/CriaContaScreen";
 import HomeScreen from "../screens/HomeScreen";
-import IndexScreen from "../screens/InformacaoVisitante/";
-import InfoVisitanteScreen from "../screens/InformacaoVisitante/InfoVisitante";
-import MapsPequenosGruposScreen from "../screens/InformacaoVisitante/MapsPequenosGrupos";
+import IndexScreen from "../screens/InformacaoVisitanteScreen/";
 import MainDrawer from "./MainDrawer";
 
 const Stack = createNativeStackNavigator();
@@ -20,14 +19,14 @@ export default () => {
 
       screenOptions={({navigation}) => ({
         headerStyle: {
-          backgroundColor: '#F5F6FA',
+          backgroundColor: '#F5F6FA', //#F5F6FA
         },
         headerTintColor: '#F5F6FA',
         headerTitleStyle: {
           fontWeight: 'bold',
         },
         headerLeft: () => (
-          <Icon name="arrow-left" size={30} color="#55A1DC" onPress={() => navigation.goBack()} />
+          <Icon name="angle-left" size={45} color="#55A1DC" onPress={() => navigation.goBack()} />
         ),
       })}>
 
@@ -52,6 +51,11 @@ export default () => {
         options={{ headerShown: true, headerShadowVisible: false }}
       />
       <Stack.Screen
+        name="CriaContaScreen"
+        component={CriaContaScreen}
+        options={{ headerShown: true, headerShadowVisible: false }}
+      />
+      <Stack.Screen
         name="CadastroScreen"
         component={CadastroScreen}
         options={{ headerShown: true, headerShadowVisible: false }}
@@ -64,17 +68,7 @@ export default () => {
       <Stack.Screen
         name="IndexScreen"
         component={IndexScreen}
-        options={{ headerShown: true }}
-      />
-      <Stack.Screen
-        name="InfoVisitanteScreen"
-        component={InfoVisitanteScreen}
-        options={{ headerShown: true }}
-      />
-      <Stack.Screen
-        name="MapsPequenosGruposScreen"
-        component={MapsPequenosGruposScreen}
-        options={{ headerShown: false, headerShadowVisible: true }}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

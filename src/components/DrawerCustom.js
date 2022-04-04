@@ -54,7 +54,7 @@ const MenuButton = styled.TouchableOpacity`
   flex-direction: row;
   margin-bottom:5px;
   border-radius:5px;
-  align-center:center;
+  align-items:center;
   `;
   const MenuSquare = styled.View`
     width:5px;

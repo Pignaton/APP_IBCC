@@ -14,6 +14,8 @@ import java.util.List;
 import com.facebook.react.bridge.JSIModulePackage; // <- add
 import com.swmansion.reanimated.ReanimatedJSIModulePackage; // <- add
 
+import com.horcrux.svg.SvgPackage; // <- add
+
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -33,6 +35,8 @@ public class MainApplication extends Application implements ReactApplication {
           return packages;
         }
 
+        //new SvgPackage() getPackages();
+
         @Override
         protected String getJSMainModuleName() {
           return "index";
@@ -42,6 +46,7 @@ public class MainApplication extends Application implements ReactApplication {
                 return new ReanimatedJSIModulePackage(); // <- add
               }
       };
+
 
   @Override
   public ReactNativeHost getReactNativeHost() {

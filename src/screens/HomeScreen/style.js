@@ -28,14 +28,14 @@ export default {
   Paragrafo: styled.Text`
     margin-bottom: 5px;
     margin-left:15px;
-    color: #000;
+    color: #55A1DC;
     font-size: 25px;
     font-family: Fredoka-Bold;
   `,
   Span: styled.Text`
     text-align: center;
     font-size: 25px;
-    color: #000;
+    color: #55A1DC;
     font-family: Fredoka-Bold;
   `,
   SubTexto: styled.Text`

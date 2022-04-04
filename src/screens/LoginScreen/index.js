@@ -28,11 +28,15 @@ export default () => {
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [isSelected, setSelection] = useState(false);
   const [mensagem, setMensagem] = useState(true);
+  const [checked, setChecked] = useState(false);
 
   const handleRecuperaSenhaButton = () => {
     navigation.navigate("RecuperaSenhaScreen");
+  };
+
+  const handleCriaContaButton = () => {
+    navigation.navigate("CriaContaScreen");
   };
 
   const handleLoginButton = async () => {
@@ -87,19 +91,26 @@ export default () => {
         style={{ marginBottom: 10 }}
       />
       <C.View>
-        <C.Checkbox>
+        <C.BoxCheckBox>
           <Checkbox
-            value={isSelected}
-            onValueChange={setSelection}
-            style={{ alignSelf: "center" }}
+            status={checked ? "checked" : "unchecked"}
+            onPress={() => {
+              setChecked(!checked);
+            }}
           />
           <C.TextoCheckbox>Lembrar de mim</C.TextoCheckbox>
-        </C.Checkbox>
+        </C.BoxCheckBox>
         <C.Senha onPress={handleRecuperaSenhaButton}>Esqueceu a senha?</C.Senha>
       </C.View>
       <C.ButtonArea onPress={handleLoginButton}>
         <C.ButtonText>ENTRAR</C.ButtonText>
       </C.ButtonArea>
+      <C.BoxTextoArea>
+        <C.TextoArea>Não tem conta ainda?</C.TextoArea>
+      </C.BoxTextoArea>
+      <C.BotaoCriarConta onPress={handleCriaContaButton}>
+        <C.TextoCriarConta>CRIAR NOVA CONTA</C.TextoCriarConta>
+      </C.BotaoCriarConta>
     </C.Container>
   );
 }

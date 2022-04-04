@@ -8,7 +8,7 @@ export default {
   `,
   Logo: styled.Image`
     width: 250px;
-    height: 150px;
+    height: 120px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
@@ -20,19 +20,19 @@ export default {
     font-size: 18px;
     margin: 10px;
     padding-bottom: 10px;
-    color: #000;
+    color: #000; //#000
     font-weight: bold;
     background-color: transparent;
   `,
   TextoLogin: styled.Text`
-    color:#000;
+    color:#55A1DC;
     margin-bottom:5px;
     font-size:25px;
     font-family:Fredoka-Bold;
   `,
   Texto: styled.Text`
-    color: #A7A7A7;
-    font-family:Roboto-Bold;
+    color: #000;
+    font-family: Roboto-Bold;
   `,
   Field: styled.TextInput.attrs({
     placeholderTextColor: "#BDBDBD",
@@ -52,13 +52,12 @@ export default {
     justify-content: space-between;
     padding-bottom: 15px;
   `,
-  Checkbox: styled.View`
-    flex-direction: row;
+  BoxCheckBox: styled.View`
+  flex-direction: row;
   `,
   TextoCheckbox: styled.Text`
     margin-top: 8px;
     color:#000;
-    font-family: Roboto-Bold;
   `,
   Senha: styled.Text`
     margin-top:8px;
@@ -71,7 +70,6 @@ export default {
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    margin-bottom: 15px;
   `,
   ButtonText: styled.Text`
     color:#FFF;
@@ -79,5 +77,33 @@ export default {
     font-weight: bold;
     font-family:Roboto-Bold;
   `,
-
+  BoxTextoArea: styled.View`
+    align-items: center;
+    justify-content: center;
+    margin: 15px;
+  `,
+  TextoArea: styled.Text`
+    color:#000;
+  `,
+  BotaoCriarConta: styled.TouchableOpacity`
+    border-width: 1px;
+    border-color: #55A1DC;
+    color:#55A1DC;
+    background-color: #FFF;
+    padding: 15px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    margin-bottom: 15px;
+  `,
+  TextoCriarConta: styled.Text`
+    color:#55A1DC;
+    font-size:15px;
+    font-weight: bold;
+    font-family: Roboto-Bold;
+  `,
+  SenhaArea: styled.View`
+    padding-bottom: 15px;
+    margin-top: 8px;
+  `,
 };

@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //Teste
-const baseUrl = "http://comunidadeblog.ga/api";
+const baseUrl = "http://comunidadeblog.tk/api";
 //Local
 //const baseUrl = 'http://192.168.0.6:8000/api';
 

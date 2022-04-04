@@ -5,6 +5,7 @@ import { useStateValue } from "../../contexts/StateContext";
 import { Picker } from "@react-native-picker/picker";
 import { TextInput, Button, RadioButton, Text, DefaultTheme } from "react-native-paper";
 import FlashMessage, { hideMessage, showMessage } from "react-native-flash-message";
+import { TextInputMask } from 'react-native-masked-text';
 import C from "./style";
 import funcao from "../../functions/funcoes";
 import api from "../../services/api";
@@ -50,7 +51,7 @@ export default () => {
       ...DefaultTheme.colors,
       primary: "#3498db",
       accent: "#f1c40f",
-      secondary: "#e5e5e5",
+      secondary: "#FF0000", //#e5e5e5
       error: "#f13a59",
     },
   };
@@ -149,6 +150,7 @@ export default () => {
           style={[styles.mText]}
           value={nome}
           theme={theme}
+          multiline={true}
           onChangeText={t => setNome(t)}
         />
         {mensagem?.idade &&
@@ -157,11 +159,19 @@ export default () => {
         <TextInput
           label="Idade"
           mode="outlined"
-          keyBoardType="phone-pad"
+          keyBoardType={'number-pad'}
           style={[styles.mText]}
           value={idade}
           theme={theme}
           onChangeText={t => setIdade(t)}
+          render={(props) => (
+            <TextInputMask
+              {...props}
+              value={idade}
+              type="only-numbers"
+              onChangeText={(text) => setIdade(text)}
+            />
+          )}
         />
         {mensagem?.email &&
           <C.Erro>{mensagem?.email}</C.Erro>
@@ -169,7 +179,7 @@ export default () => {
         <TextInput
           label="Email"
           mode="outlined"
-          keyBoardType="email"
+          keyBoardType="email-address"
           style={[styles.mText]}
           value={email}
           theme={theme}
@@ -186,6 +196,14 @@ export default () => {
           style={[styles.mText]}
           value={telefone}
           onChangeText={t => setTelefone(t)}
+          render={(props) => (
+            <TextInputMask
+              {...props}
+              value={telefone}
+              type="cel-phone"
+              onChangeText={(text) => setTelefone(text)}
+            />
+          )}
         />
         {mensagem?.estado_civil &&
           <C.Erro>{mensagem?.estado_civil}</C.Erro>
@@ -261,6 +279,14 @@ export default () => {
           theme={theme}
           onBlur={handleCep}
           style={[styles.mText]}
+          render={(props) => (
+            <TextInputMask
+              {...props}
+              value={cep}
+              type={'zip-code'}
+              onChangeText={(text) => setCep(text)}
+            />
+          )}
         />
         <TextInput
           mode="outlined"
@@ -282,11 +308,20 @@ export default () => {
         />
         <TextInput
           mode="outlined"
+          keyBoardType="numeric"
           label="Numero"
           value={numero}
           onChangeText={(t) => setNumero(t)}
           theme={theme}
           style={[styles.mText]}
+          render={(props) => (
+            <TextInputMask
+              {...props}
+              value={idade}
+              type="only-numbers"
+              onChangeText={(text) => setIdade(text)}
+            />
+          )}
         />
         <TextInput
           mode="outlined"
@@ -323,6 +358,7 @@ export default () => {
 const styles = StyleSheet.create({
   mText: {
     marginBottom: 15,
+    backgroundColor:'#FFF',
   },
 });
 
