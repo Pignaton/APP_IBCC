@@ -4,7 +4,7 @@ export default {
   Container: styled.SafeAreaView`
     flex: 1;
     padding: 20px;
-    background-color: #F5F6FA;
+    background-color: #FFF; //#F5F6FA
   `,
   Logo: styled.Image`
     width: 250px;

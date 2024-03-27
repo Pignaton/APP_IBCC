@@ -7,11 +7,6 @@ export default {
     padding: 10px;
   }
   `,
-  /*Scroller: styled.ScrollView`
-    flex: 1;
-    padding: 20px;
-
-  `,*/
   LoadingIcon: styled.ActivityIndicator``,
   NoListaArea: styled.View`
     justify-content: center;

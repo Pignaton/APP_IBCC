@@ -19,6 +19,7 @@ export default () => {
     colors: {
       ...DefaultTheme.colors,
       primary: "#3498db",
+      background: "#FFF",
       accent: "#f1c40f",
     },
   };

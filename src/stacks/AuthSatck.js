@@ -16,12 +16,11 @@ const Stack = createNativeStackNavigator();
 export default () => {
   return (
     <Stack.Navigator
-
       screenOptions={({navigation}) => ({
         headerStyle: {
-          backgroundColor: '#F5F6FA', //#F5F6FA
+          backgroundColor: '#FFF', //#F5F6FA
         },
-        headerTintColor: '#F5F6FA',
+        headerTintColor: '#FFF',
         headerTitleStyle: {
           fontWeight: 'bold',
         },
@@ -29,7 +28,6 @@ export default () => {
           <Icon name="angle-left" size={45} color="#55A1DC" onPress={() => navigation.goBack()} />
         ),
       })}>
-
       <Stack.Screen
         name="PreloadScreen"
         component={PreloadScreen}

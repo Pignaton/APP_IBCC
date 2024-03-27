@@ -81,6 +81,11 @@ export default {
     let json = await request("delete", `/visitante/deleta/${cod_pessoa}`, {}, token);
     return json;
   },
+  listaIntegrantes: async () => {
+    let token = await AsyncStorage.getItem("token");
+    let json = await request("get", "/lista/integrantes", {}, token);
+    return json;
+  },
   listaCampanhas: async () => {
     let json = await request("get", "/lista/campanhas", {});
     return json;

@@ -1,58 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
-import { Menu, Portal, Paragraph, Button, Dialog, Divider, DefaultTheme  } from "react-native-paper";
+import { Portal, Paragraph, Button, Dialog, DefaultTheme, Card, Surface, Appbar } from "react-native-paper";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { StyleSheet } from "react-native";
 import Funcoes from "../functions/funcoes";
 
 const Div = styled.SafeAreaView``;
-const Box = styled.TouchableOpacity`
-  background-color: #FFF;
-  border-width: 2px;
-  border-color: #E8E9ED;
-  border-radius: 20px;
-  padding: 15px;
-  margin-bottom: 15px;
-`;
-const HeaderArea = styled.View`
-  flex-direction: row;
-  align-items: center;
-`;
+const Box = styled.TouchableOpacity``;
 
-const InfoArea = styled.View`
-  margin-left: 15px;
-  flex: 1;
-`;
-const Title = styled.Text`
-  font-size: 17px;
-  font-weight: bold;
-  color: #000;
-`;
-const Date = styled.Text`
-  font-size: 14px;
-  font-weight: bold;
-  color: #9C9DB9;
-`;
-const ButtonBar = styled.TouchableOpacity`
-  width: 25px;
-  height: 25px;
-  justify-content: center;
-  align-items: center;
-  margin-right: 5px;
-`;
-const Body = styled.Text`
-  font-size: 15px;
-  color: #000;
-  margin: 15px 0;
-
-`;
 export default ({ data }) => {
 
   const navigation = useNavigation();
-  const [visible, setVisible] = React.useState(false);
-  const openMenu = () => setVisible(true);
-  const closeMenu = () => setVisible(false);
-
   const [visibled, setVisibled] = React.useState(false);
   const showDialog = () => setVisibled(true);
   const hideDialog = () => setVisibled(false);
@@ -63,15 +22,14 @@ export default ({ data }) => {
     roundness: 2,
     colors: {
       ...DefaultTheme.colors,
-      primary: '#3498db',
-      accent: '#f1c40f',
-      background: '#FFF',
+      primary: "#3498db",
+      accent: "#f1c40f",
+      background: "#FFF",
     },
   };
 
   const handleDeletaPessoa = () => {
     setCodPessoa(codPessoa);
-    closeMenu();
     showDialog();
   };
 
@@ -85,50 +43,36 @@ export default ({ data }) => {
 
   return (
     <Div>
-      <Box key={data} onPress={handleVerPessoa}>
-        <HeaderArea>
-          <Icon name="newspaper-o" size={30} color="#8863E7"></Icon>
-          <InfoArea>
-            <Title>{data.nome}</Title>
-            <Date>{data.created_at}</Date>
-          </InfoArea>
-          <ButtonBar>
-          <Menu
-            theme={theme}
-            mode={'light'}
-            visible={visible}
-            onDismiss={closeMenu}
-            anchor={
-              <Icon
-                name="bars"
-                size={25}
-                color="#000"
-                onPress={() => openMenu(true)}
-              />
-            }>
-            <Menu.Item
-              icon="eye"
-              onPress={() => handleVerPessoa(data.cod_pessoa)}
-              title="Ver Visitante"
-              style={{ color: '#ff0000' }}
-              onDismiss={closeMenu}
-            />
-            <Menu.Item icon="pen" onPress={() => {}} title="Editar" />
-            <Divider />
-            <Menu.Item
-              icon="trash-can"
-              onPress={() => handleDeletaPessoa(data.cod_pessoa)}
-              title="Deletar"
-              style={{ color: '#ff0000' }}
-              onDismiss={closeMenu}
-            />
-          </Menu>
-          </ButtonBar>
-        </HeaderArea>
-        <Body>
-          {data.idade + " anos - " + Funcoes.estadoCivil(data.estado_civil)}
-        </Body>
-      </Box>
+      <Surface
+        theme={theme}
+        style={styles.surface}
+        onPress={() => {
+          alert("Option 2 was pressed");
+        }}>
+        <Box key={data} onPress={handleVerPessoa}>
+          <Card.Title
+            title={data.nome}
+            subtitle={data.created_at}
+            left={(props) => (
+              <Icon name="newspaper-o" size={30} color="#8863e7" />
+            )}
+            right={(props) => (
+              <Appbar.Action {...props} icon="delete-outline" color="#000" onPress={() => handleDeletaPessoa(1)} />
+            )}
+          />
+          <Card.Content>
+            <Paragraph> {data.idade + " anos " + Funcoes.estadoCivil(data.estado_civil)}</Paragraph>
+          </Card.Content>
+          <Card.Actions>
+            <Button
+              color="#1A5893"
+              onPress={() => handleEditarPessoa(1)}>
+              Editar
+            </Button>
+            <Button onPress={() => handleDeletaPessoa(1)}>Visualizar</Button>
+          </Card.Actions>
+        </Box>
+      </Surface>
       <Portal>
         <Dialog visible={visibled} onDismiss={hideDialog}>
           <Dialog.Title>Atenção!</Dialog.Title>
@@ -146,4 +90,13 @@ export default ({ data }) => {
     </Div>
   );
 };
+
+const styles = StyleSheet.create({
+  surface: {
+    margin: 10,
+    elevation: 2,
+    borderRadius: 5,
+    padding: 10,
+  },
+});
 

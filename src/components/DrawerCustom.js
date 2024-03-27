@@ -76,6 +76,7 @@ export default (props) => {
   const [context, dispatch] = useStateValue();
   const menus = [
     {title: 'Lista de Visitantes', icon: 'users', screen: 'ListScreen'},
+    {title: 'Lista de Integrantes', icon: 'users', screen: 'IntegranteScreen'},
   ];
 
   const handleChangeUnit = async () => {
