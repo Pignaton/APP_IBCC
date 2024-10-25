@@ -38,7 +38,8 @@ export default () => {
   }, []);
   return (
     <C.Container>
-      <C.LoadingIcon color="#8863E6" size="large" />
+      <C.Logo source={require("../../assets/logo.png")} resizeMode="contain" />
+      <C.LoadingIcon color="#FFF" size="large" />
     </C.Container>
   );
 }

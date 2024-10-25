@@ -1,0 +1,77 @@
+import React, { useEffect, useState } from "react";
+import { Text } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/FontAwesome";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+//import MapsPequenosGrupos from "./MapsPequenosGrupos";
+import InfoVisitante from "./InfoVisitante";
+import Lista from "../ListScreen";
+
+export default function App(data) {
+
+  const Tab = createBottomTabNavigator();
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerStyle: { backgroundColor: '#FFF', fontFamily: 'Roboto-Bold' },
+      headerTitle: "INFORMAÇÕES DO VISITANTE",
+    });
+  });
+
+
+  return (
+    <Tab.Navigator initialRouteName="INFORMAÇÕES DO VISITANTE">
+      <Tab.Screen
+        name="Voltar"
+        component={Lista}
+        options={{
+          headerShown: true,
+          headerShadowVisible: true,
+          tabBarLabelStyle: {
+            fontSize: 12,
+            fontFamily: "Roboto-Bold",
+          },
+          tabBarIcon: () => (
+            <Icon name="arrow-left" color="#7C04E4" size={30} />
+          ),
+        }} />
+      {/*<Tab.Screen
+        name="Explorar"
+        component={MapsPequenosGrupos}
+        options={{
+          headerShown: true,
+          headerShadowVisible: true,
+          tabBarLabelStyle: {
+            fontSize: 12,
+            fontFamily: "Roboto-Bold",
+          },
+          tabBarIcon: () => (
+            <Icon name="map" color="#7C04E4" size={30} />
+          ),
+        }}
+      />*/}
+      <Tab.Screen
+        name="Informações do Visitante"
+        component={InfoVisitante}
+        listeners={{
+          tabPress: e => {
+            navigation.navigate("InfoVisitante", {cod_pessoa: data.cod_pessoa});
+          },
+        }}
+        options={{
+          headerShown: false,
+          tabBarLabel: "Visitante",
+          tabBarLabelStyle: {
+            fontSize: 12,
+            fontFamily: "Roboto-Bold",
+          },
+          tabBarIcon: () => (
+            <Icon name="account" color="#7C04E4" size={30} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
+

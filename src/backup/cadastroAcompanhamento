@@ -1,0 +1,185 @@
+import React, { useEffect, useState } from "react";
+import Icon from "react-native-vector-icons/FontAwesome";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import Funcoes from "../../functions/funcoes";
+import api from "../../services/api";
+import C from "./style";
+import { StyleSheet, View, Text } from "react-native";
+import { Picker } from "@react-native-picker/picker";
+import RNPickerSelect from "react-native-picker-select";
+import { DefaultTheme, TextInput } from "react-native-paper";
+
+export default () => {
+
+  const handleDropdownChange = (name) => (value) => {
+    this.setState({ [name]: value });
+  };
+
+  const navigation = useNavigation();
+  const route = useRoute();
+
+  const [nomeremetente, setNomeRemetente] = useState("");
+  const [statuscontato, setStatusContato] = useState(null);
+  const [statuscelula, setStatusCelula] = useState(null);
+  const [nomecelula, setNomeCelula] = useState("");
+  const [descricao, setDescricao] = useState("");
+
+  const [visitante, setVisitante] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [alerta, setAlerta] = useState(false);
+  const [mensagem, setMensagem] = useState();
+  const [aviso, setAviso] = useState();
+
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitle: "INFORMAÇÕES DO VISITANTE",
+      headerTintColor: "#000",
+    });
+  }, []);
+
+  const handleCadastroAcompanhamentoButton = async () => {
+    //setVisitante([]);
+    setLoading(true);
+    const result = await api.cadastroPosVisita(8, nomeremetente, statuscontato, nomecelula, statuscelula, descricao);
+    setLoading(false);
+    if (result["error"] === "") {
+      setAviso(result["sucesso"]);
+      setMensagem(null);
+      alert("Prontinho, cadastro realizado com sucesso.");
+    } else {
+      setMensagem(result["errors"]);
+      alert(result["errors"]);
+    }
+  };
+
+  const theme = {
+    ...DefaultTheme,
+    roundness: 8,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: "#7c04e4", //3498db
+      accent: "#f1c40f",
+      secondary: "#FF0000", //#e5e5e5 - #F5F6FA
+      error: "#f13a59",
+      outline: "#E4E4E4",
+    },
+  };
+
+  return (
+    <C.Area>
+      <C.Box>
+        <C.HeaderBody>
+          <TextInput
+            multiline={true}
+            label="Nome de quem fez o contato"
+            mode="outlined"
+            keyBoardType="text"
+            style={[styles.mText]}
+            value={nomeremetente}
+            theme={theme}
+            onChangeText={(t) => setNomeRemetente(t)}
+          />
+          {mensagem?.nome_remetente &&
+            <C.Erro type="error" visible>{mensagem?.nome_remetente}</C.Erro>
+          }
+          <Picker selectedValue={statuscontato}
+                  itemStyle={{ backgroundColor: "#000", color: "#000", fontFamily:"Ebrima", fontSize:17 }}
+                  onValueChange={(value: String) =>
+                    setStatusContato(value)
+                  }>
+            <Picker.Item label="Como Fez o contato" value="" />
+            <Picker.Item label="Whatsapp" value="W" />
+            <Picker.Item label="Ligação" value="L" />
+          </Picker>
+
+          {/*<View style={styles.picker}>
+            <Picker useNativeAndroidPickerStyle={false}
+                    selectedValue={statuscelula} onValueChange={(value: String) => {
+              setStatusCelula(value);
+            }}>
+              <Picker.Item label="Indicou uma célula" value="" />
+              <Picker.Item label="Sim" value="S" />
+              <Picker.Item label="Não" value="N" />
+            </Picker>
+          </View>*/}
+          <View style={styles.picker}>
+            <RNPickerSelect
+              value={statuscelula}
+              placeholder={{ label: "Indicou uma célula", value: null }}
+              useNativeAndroidPickerStyle={false}
+              onValueChange={(value: String) => {
+                setStatusCelula(value);
+              }}
+              items={[
+                { label: "Sim", value: "S" },
+                { label: "Não", value: "N" },
+              ]}
+            />
+          </View>
+          {statuscelula === "S" &&
+            <TextInput
+              label="Qual Igreja?"
+              mode="outlined"
+              keyBoardType="text"
+              value={nomecelula}
+              style={[styles.mText]}
+              theme={theme}
+              multiline={true}
+              onChangeText={t => setNomeCelula(t)}
+            />
+          }
+          <C.TextArea
+            multiline
+            mode="outlined"
+            theme={theme}
+            style={[styles.mTextArea]}
+            numberOfLines={4}
+            value={descricao}
+            onChangeText={(t) => {
+              setDescricao(t);
+            }}
+          />
+
+          <C.ButtonArea onPress={handleCadastroAcompanhamentoButton}>
+            <C.ButtonText style={styles.font}>ENVIAR</C.ButtonText>
+          </C.ButtonArea>
+        </C.HeaderBody>
+      </C.Box>
+    </C.Area>
+  );
+}
+
+const styles = StyleSheet.create({
+  mText: {
+    marginBottom: 20,
+    backgroundColor: "#FFF",
+    borderRadius: 8,
+    color: "#F4F4F4",
+  },
+  mTextArea: {
+    marginBottom: 20,
+    backgroundColor: "#FFF",
+    borderColor: "#E4E4E4",
+    color: "#000",
+    borderRadius: 8,
+    borderWidth: 1,
+  },
+  picker: {
+    marginBottom: 20,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#E4E4E4",
+    color: "#000",
+  },
+  select: {
+    width: 80,
+    height: 45,
+    borderWidth: 1,
+    borderRadius: 3,
+    borderColor: "#000",
+    color: "#000",
+    paddingHorizontal: 10, // to ensure the text is never behind the icon
+
+  },
+});

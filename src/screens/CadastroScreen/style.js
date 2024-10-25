@@ -5,7 +5,8 @@ export default {
   Container: styled.SafeAreaView`
     flex: 1;
     padding: 20px;
-    background-color: #F5F6FA; /*#F5F6FA*/
+    background-color: #FFF;
+    font-family: Roboto-Bold;
   `,
   Logo: styled.Image`
     width: 250px;
@@ -26,17 +27,16 @@ export default {
     background-color: transparent;
   `,
   TextoLogin: styled.Text`
-    color:#55A1DC;
-    margin-bottom:5px;
-    font-size:25px;
-    font-family:Fredoka-Bold;
+    color: #000;
+    margin-bottom: 5px;
+    font-size: 25px;
   `,
   Texto: styled.Text`
     color: #A7A7A7;
     font-family: Roboto-Bold;
   `,
   ButtonArea: styled.TouchableOpacity`
-    background-color: #55A1DC;
+    background-color: #7c04e4;
     padding: 15px;
     justify-content: center;
     align-items: center;
@@ -47,14 +47,15 @@ export default {
     color: #FFF;
     font-size: 15px;
     font-weight: bold;
-    font-family:Roboto-Bold;
   `,
 
   Erro: styled.Text`
+    flex: 1;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    color:#F08585;
-    font-family:Roboto-Bold;
-    position: relative;
-    
+    color: #F08585;
+    padding-bottom: 30px;
+    font-size: 12px;
   `,
 };

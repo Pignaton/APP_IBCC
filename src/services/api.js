@@ -1,9 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //Teste
-const baseUrl = "http://comunidadeblog.tk/api";
+const baseUrl = 'https://kalweb.com.br/api';
+// Laravel
+//const baseUrl = "http://127.0.0.1:8000/api";
 //Local
-//const baseUrl = 'http://192.168.0.6:8000/api';
+//const baseUrl = 'http://192.168.0.11:8000/api';
 
 const request = async (method, endpoint, params, token = null) => {
   method = method.toLowerCase();
@@ -51,29 +53,47 @@ export default {
     await AsyncStorage.removeItem("token");
     return json;
   },
-  cadastro: async (culto, campanha, nome, idade, email, telefone, sexo, estado_civil, cep, endereco, bairro, numero, complemento, estado, uf) => {
+  cadastro: async (culto, campanha, nome, idade, telefone, sexo, estado_civil, membro_igreja, igreja, bairro) => {
     let json = await request("post", "/cadastro", {
       culto,
       campanha,
       nome,
       idade,
-      email,
       telefone,
       sexo,
       estado_civil,
-      cep,
-      endereco,
+      membro_igreja,
+      igreja,
       bairro,
-      numero,
-      complemento,
-      estado,
-      uf,
+
     });
+    return json;
+  },
+  cadastroPosVisita: async (cod_pessoa, nome_remetente, ind_status_contato_via, ind_status_celula, nome_celula, descricao) => {
+    let token = await AsyncStorage.getItem("token");
+    let json = await request("post", "/cadastro/primeiro-contato", {
+      cod_pessoa,
+      nome_remetente,
+      ind_status_contato_via,
+      ind_status_celula,
+      nome_celula,
+      descricao,
+    }, token);
+    return json;
+  },
+  listaPosVisita: async (cod_pessoa) => {
+    let token = await AsyncStorage.getItem("token");
+    let json = await request("get", `/lista/primeiro-contato/${cod_pessoa}`, {}, token);
     return json;
   },
   listaVisitantes: async () => {
     let token = await AsyncStorage.getItem("token");
     let json = await request("get", "/lista/visitantes", {}, token);
+    return json;
+  },
+  listaVisitante: async (cod_pessoa) => {
+    let token = await AsyncStorage.getItem("token");
+    let json = await request("get", `/visitante/${cod_pessoa}`, {}, token);
     return json;
   },
   deletaVisitante: async (cod_pessoa) => {

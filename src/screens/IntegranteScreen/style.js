@@ -3,7 +3,7 @@ import styled from "styled-components/native";
 export default {
   Container: styled.View`
     flex: 1;
-    background-color: #FFF; //#F5F6FA
+    background-color: #FFF; {/*#F5F6FA*/}
     padding: 10px;
   }
   `,

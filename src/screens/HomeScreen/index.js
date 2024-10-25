@@ -16,13 +16,13 @@ export default () => {
 
   return (
     <C.Container>
-      <C.Logo />
+      <C.Logo source={require('../../assets/logo_roxo.png')} resizeMode="contain" />
       <C.Titulo>
         <C.TextoHome>
           <C.Paragrafo>Igreja Batista Comunidade </C.Paragrafo>
           <C.Span>de Cristo</C.Span>
         </C.TextoHome>
-        <C.SubTexto>Junte-se à maior e mais tradicional comunidade evangelica da Vila Alpina!</C.SubTexto>
+        {/*<C.SubTexto>Junte-se à maior e mais tradicional comunidade evangelica da Vila Alpina!</C.SubTexto>*/}
       </C.Titulo>
 
       <C.ButtonArea onPress={handleLoginButton}>

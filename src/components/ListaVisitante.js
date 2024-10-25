@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import styled from "styled-components/native";
-import { Portal, Paragraph, Button, Dialog, DefaultTheme, Card, Surface, Appbar } from "react-native-paper";
+import { Portal, Paragraph, Button, Dialog, DefaultTheme, Card, Text, Badge } from "react-native-paper";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { StyleSheet } from "react-native";
 import Funcoes from "../functions/funcoes";
@@ -9,13 +10,14 @@ import Funcoes from "../functions/funcoes";
 const Div = styled.SafeAreaView``;
 const Box = styled.TouchableOpacity``;
 
-export default ({ data }) => {
+export default ({ data  }) => {
 
   const navigation = useNavigation();
+
   const [visibled, setVisibled] = React.useState(false);
   const showDialog = () => setVisibled(true);
   const hideDialog = () => setVisibled(false);
-  const [codPessoa, setCodPessoa] = useState(data.cod_pessoa);
+  const [codPessoaa, setCodPessoa] = useState(data.cod_pessoa);
 
   const theme = {
     ...DefaultTheme,
@@ -24,12 +26,13 @@ export default ({ data }) => {
       ...DefaultTheme.colors,
       primary: "#3498db",
       accent: "#f1c40f",
-      background: "#FFF",
+      error: "#f13a59",
+      surface: "#000",
     },
   };
 
   const handleDeletaPessoa = () => {
-    setCodPessoa(codPessoa);
+    setCodPessoa(codPessoaa);
     showDialog();
   };
 
@@ -37,42 +40,39 @@ export default ({ data }) => {
     hideDialog();
   };
 
-  const handleVerPessoa = () => {
-    navigation.navigate("IndexScreen", { cod_pessoa: data.cod_pessoa });
-  };
+  /*const handleVerPessoa = () => {
+    navigation.navigate("IndexScreen");
+  };*/
 
   return (
     <Div>
-      <Surface
+      <Card
         theme={theme}
-        style={styles.surface}
-        onPress={() => {
-          alert("Option 2 was pressed");
+        style={[styles.surface]}
+       >
+        <Box key={data} data={data} onPress={() => {
+          navigation.navigate("IndexScreen", {codPessoa : data.cod_pessoa},);
         }}>
-        <Box key={data} onPress={handleVerPessoa}>
           <Card.Title
+            theme={theme}
+            titleStyle={[styles.paragrafo]}
+            subtitleStyle={[styles.paragrafo]}
             title={data.nome}
             subtitle={data.created_at}
             left={(props) => (
-              <Icon name="newspaper-o" size={30} color="#8863e7" />
-            )}
-            right={(props) => (
-              <Appbar.Action {...props} icon="delete-outline" color="#000" onPress={() => handleDeletaPessoa(1)} />
+              <Icon name="newspaper-o" size={30} color="#7C04E4" />
             )}
           />
           <Card.Content>
-            <Paragraph> {data.idade + " anos " + Funcoes.estadoCivil(data.estado_civil)}</Paragraph>
+            <Paragraph style={[styles.paragrafo]}> <Text style={[styles.titulo]}>Idade: </Text> {data.idade + " anos "} </Paragraph>
+            <Paragraph style={[styles.paragrafo]}> <Text style={[styles.titulo]}>Gênero: </Text> {Funcoes.estadoCivil(data.estado_civil)} </Paragraph>
           </Card.Content>
           <Card.Actions>
-            <Button
-              color="#1A5893"
-              onPress={() => handleEditarPessoa(1)}>
-              Editar
-            </Button>
-            <Button onPress={() => handleDeletaPessoa(1)}>Visualizar</Button>
+            {/*<Badge style={[styles.content]}>Contato não Feito</Badge>
+             <Button textColor="#000" mode="outlined" onPress={() => handleDeletaPessoa(1)}>Deletar</Button>*/}
           </Card.Actions>
         </Box>
-      </Surface>
+      </Card>
       <Portal>
         <Dialog visible={visibled} onDismiss={hideDialog}>
           <Dialog.Title>Atenção!</Dialog.Title>
@@ -97,6 +97,20 @@ const styles = StyleSheet.create({
     elevation: 2,
     borderRadius: 5,
     padding: 10,
+    backgroundColor: "#FFF",
+  },
+  paragrafo: {
+    color: "#000",
+  },
+  titulo: {
+    fontWeight: "bold",
+    color: "#000",
+  },
+  content: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    marginBottom: 10,
   },
 });
 

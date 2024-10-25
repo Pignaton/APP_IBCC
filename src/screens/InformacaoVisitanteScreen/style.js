@@ -1,15 +1,23 @@
 import styled from "styled-components/native";
 
 export default {
-  Area: styled.SafeAreaView`
+
+  LoadingIcon: styled.ActivityIndicator`
     flex: 1;
   `,
+
+  Area: styled.SafeAreaView`
+    flex: 1;
+    padding: 15px;
+    background-color: #FFF;
+    font-family: Roboto-Bold;
+  `,
   BoxArea: styled.View`
-    background-color: #0D1E52;
+    background-color: #FFF;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     border-width: 1px;
-    border-color: #E8E9ED;
+    border-color: #FFF;
     padding: 15px;
     margin-top: 10px;
     margin-left: 10px;
@@ -27,7 +35,6 @@ export default {
   Nome: styled.Text`
     font-size: 17px;
     font-weight: bold;
-    color: #FFF;
   `,
   Idade: styled.Text``,
   Box: styled.View`
@@ -61,6 +68,19 @@ export default {
     color: #9c9db9;
   `,
 
+  TextArea: styled.TextInput`
+    border-width: 1;
+    margin-bottom: 20;
+    background-color: #FFF;
+    border-radius: 8;
+    padding: 10;
+  `,
+
+  Texto: styled.Text`
+    color: #A7A7A7;
+    font-family: Roboto-Bold;
+  `,
+
   //Style da página MapsPequenosGrupo
 
   Container: styled.View`
@@ -76,5 +96,43 @@ export default {
     text-align: center;
     padding-bottom: 5px;
     color: #000;
+  `,
+  TituloLoading: styled.Text`
+    font-size: 13px;
+    margin-top: 20px;
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 5px;
+    color: #000;
+  `,
+  ButtonArea: styled.TouchableOpacity`
+    background-color: #7c04e4;
+    padding: 15px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    margin-top: 15px;
+  `,
+  ButtonText: styled.Text`
+    color: #FFF;
+    font-size: 15px;
+    font-weight: bold;
+  `,
+
+  Erro: styled.Text`
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #F08585;
+    padding-bottom: 30px;
+    font-size: 12px;
+  `,
+  ScrollView: styled.ScrollView`
+    background-color: #FFF;
+  `,
+
+  AreaLoading: styled.View`
+    padding: 30px;
   `,
 };

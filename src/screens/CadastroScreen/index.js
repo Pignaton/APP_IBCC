@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useStateValue } from "../../contexts/StateContext";
 import { Picker } from "@react-native-picker/picker";
-import { TextInput, Button, RadioButton, Text, DefaultTheme } from "react-native-paper";
+import RNPickerSelect from "react-native-picker-select";
+import { TextInput, DefaultTheme } from "react-native-paper";
 import FlashMessage, { hideMessage, showMessage } from "react-native-flash-message";
-import { TextInputMask } from 'react-native-masked-text';
+import { TextInputMask } from "react-native-masked-text";
 import C from "./style";
 import funcao from "../../functions/funcoes";
 import api from "../../services/api";
-import apiOut from "../../services/api_out";
 import ModalCepCustom from "../../components/ModalCepCustom";
-import Icon from "react-native-vector-icons/FontAwesome";
+
 
 export default () => {
 
   const navigation = useNavigation();
   const [context, dispatch] = useStateValue();
 
-  const [email, setEmail] = useState("");
+  //const [email, setEmail] = useState("");
   const [nome, setNome] = useState("");
   const [idade, setIdade] = useState("");
   const [telefone, setTelefone] = useState("");
@@ -26,16 +26,11 @@ export default () => {
   const [selectedculto, setSelectedCulto] = useState();
   const [selectedcampanha, setSelectedCampanha] = useState("");
   const [estadocivil, setEstadoCivil] = useState("");
-  const [cep, setCep] = useState("");
-  const [endereco, setEndereco] = useState("");
+  const [membroigreja, setMembroIgreja] = useState("");
   const [bairro, setBairro] = useState("");
-  const [numero, setNumero] = useState("");
-  const [complemento, setComplemento] = useState("");
-  const [localidade, setLocalidade] = useState("");
-  const [uf, setUf] = useState("");
+  const [igreja, setIgreja] = useState("");
 
   const [loading, setLoading] = useState(true);
-  const [viacep, setViaCep] = useState();
   const [alerta, setAlerta] = useState(false);
   const [mensagem, setMensagem] = useState();
   const [aviso, setAviso] = useState();
@@ -46,13 +41,23 @@ export default () => {
 
   const theme = {
     ...DefaultTheme,
-    roundness: 5,
+    roundness: 8,
+    typescale: {
+      labelLarge: { letterSpacing: 1 },
+    },
     colors: {
       ...DefaultTheme.colors,
-      primary: "#3498db",
+      primary: "#7c04e4", //3498db
       accent: "#f1c40f",
-      secondary: "#FF0000", //#e5e5e5
+      secondary: "#FF0000", //#e5e5e5 - #F5F6FA
       error: "#f13a59",
+      outline: "#E4E4E4",
+      secondaryContainer: "#E4E4E4",
+      surfaceVariant: "#E4E4E4",
+      surface: "#E4E4E4",
+      brandPrimary: "#fefefe",
+      brandSecondary: "#E4E4E4",
+      tertiary: "#a1b2c3",
     },
   };
 
@@ -61,13 +66,14 @@ export default () => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerStyle: { backgroundColor: "#F5F6FA" },
-      headerTitle: "",
+      headerStyle: { backgroundColor: "#FFF", fontFamily: "Roboto-Bold" },
+      headerTitle: "REGISTRAR VISITANTE",
     });
     getListaCultos();
     getListaCampanhas();
     handleExibeCampos();
   }, []);
+
 
   const getListaCultos = async () => {
     const result = await api.listaCultos();
@@ -87,15 +93,6 @@ export default () => {
     }
   };
 
-  // Api da viacep
-  const handleCep = async () => {
-    let result = await apiOut.buscaCep(cep);
-    if (result.erro != true) {
-      setViaCep(result);
-    } else {
-      setAlerta(result.erro);
-    }
-  };
   //Exibe os campos culto e campanha
   const handleExibeCampos = async () => {
     let result = await api.exibeCampo();
@@ -108,7 +105,8 @@ export default () => {
 
 
   const handleCadastroButton = async () => {
-    let result = await api.cadastro(selectedculto, selectedcampanha, nome, idade, email, telefone, sexo, estadocivil, cep, endereco, bairro, numero, complemento, localidade, uf);
+    let result = await api.cadastro(selectedculto, selectedcampanha, nome, idade, telefone, sexo, estadocivil, membroigreja, igreja, bairro,
+    );
     if (result["error"] === "") {
       setAviso(result["sucesso"]);
       setMensagem(null);
@@ -131,35 +129,29 @@ export default () => {
     <C.ScrollView>
       <C.Container>
         {alerta === true && <ModalCepCustom />}
-        {mensagem && mensagem !== null && <FlashMessage position="bottom" />}
+        {mensagem && true && <FlashMessage position="bottom" />}
         {aviso && <FlashMessage position="bottom" type="success" icon="success" />}
-        <C.Logo />
-        <C.Titulo>
-          <C.TextoLogin>
-            Registrar Visitante
-          </C.TextoLogin>
-          <C.Texto>Campos com * são obrigátorios </C.Texto>
-        </C.Titulo>
-        {mensagem?.nome &&
-          <C.Erro>{mensagem?.nome}</C.Erro>
-        }
-        <TextInput
-          label="Nome Completo"
-          mode="outlined"
-          keyBoardType="text"
-          style={[styles.mText]}
-          value={nome}
-          theme={theme}
-          multiline={true}
-          onChangeText={t => setNome(t)}
-        />
-        {mensagem?.idade &&
-          <C.Erro>{mensagem?.idade}</C.Erro>
-        }
+
+        <View>
+          <TextInput
+            label="Nome Completo"
+            mode="outlined"
+            keyBoardType="text"
+            style={[styles.mText]}
+            value={nome}
+            theme={theme}
+            multiline={true}
+            onChangeText={t => setNome(t)}
+          />
+          {mensagem?.nome &&
+            <C.Erro type="error" visible>{mensagem?.nome}</C.Erro>
+          }
+        </View>
+
         <TextInput
           label="Idade"
           mode="outlined"
-          keyBoardType={'number-pad'}
+          keyBoardType={"number-pad"}
           style={[styles.mText]}
           value={idade}
           theme={theme}
@@ -173,28 +165,18 @@ export default () => {
             />
           )}
         />
-        {mensagem?.email &&
-          <C.Erro>{mensagem?.email}</C.Erro>
+        {mensagem?.idade &&
+          <C.Erro>{mensagem?.idade}</C.Erro>
         }
+
         <TextInput
-          label="Email"
-          mode="outlined"
-          keyBoardType="email-address"
-          style={[styles.mText]}
-          value={email}
-          theme={theme}
-          onChangeText={t => setEmail(t)}
-        />
-        {mensagem?.telefone &&
-          <C.Erro>{mensagem?.telefone}</C.Erro>
-        }
-        <TextInput
-          label="Telefone"
+          label="(00) 00000 0000"
           mode="outlined"
           keyboardType="phone-pad"
           theme={theme}
           style={[styles.mText]}
           value={telefone}
+          placeholder={"(00) 00000 0000"}
           onChangeText={t => setTelefone(t)}
           render={(props) => (
             <TextInputMask
@@ -205,148 +187,122 @@ export default () => {
             />
           )}
         />
-        {mensagem?.estado_civil &&
-          <C.Erro>{mensagem?.estado_civil}</C.Erro>
+        {mensagem?.telefone &&
+          <C.Erro>{mensagem?.telefone}</C.Erro>
         }
-        <Picker style={picker.select} selectedValue={estadocivil}
-                onValueChange={(itemValue, itemIndex) =>
-                  setEstadoCivil(itemValue)
-                }>
-          <Picker.Item label="Estado Civil..." value="I" />
-          <Picker.Item label="Solteiro" value="S" />
-          <Picker.Item label="Casado" value="C" />
-          <Picker.Item label="Viúva" value="V" />
-          <Picker.Item label="Separado" value="A" />
-          <Picker.Item label="Divorciado" value="D" />
-        </Picker>
-        {mensagem?.sexo &&
-          <C.Erro>{mensagem?.sexo}</C.Erro>
-        }
-        <RadioButton.Group onValueChange={newValue => setSexo(newValue)} value={sexo}>
-          <View style={{ marginBottom: 15, flexDirection: "row", justifyContent: "space-evenly" }}>
-            <View>
-              <Text>Feminino</Text>
-              <RadioButton value="F" />
-            </View>
-            <View>
-              <Text>Masculino</Text>
-              <RadioButton value="M" />
-            </View>
-          </View>
-        </RadioButton.Group>
-        {mensagem?.culto &&
-          <C.Erro>{mensagem?.culto}</C.Erro>
-        }
-        {exibeCampo.map((item, index) => (
-          (item.nom_campo === "culto" && item.status === '1' &&
-            <Picker style={picker.select} selectedValue={selectedculto}
-                    onValueChange={(itemValue, itemIndex) =>
-                      setSelectedCulto(itemValue)
-                    }>
-              <Picker.Item label="Selecione o dia do culto..." value="" />
-              {listacultos.map((item, index) => (
-                <Picker.Item
-                  label={item.nom_culto + " - " + funcao.diaCulto(item.dia_culto) + " - " + funcao.periodo(item.ind_periodo)}
-                  value={item.cod_culto}
-                  key={index} />
-              ))}
-            </Picker>
-          )
-        ))}
-        {mensagem?.campanha &&
-          <C.Erro>{mensagem?.campanha}</C.Erro>
-        }
-        {exibeCampo.map((item, index) => (
-          (item.nom_campo === "campanha" && item.status === '1' &&
-            <Picker style={picker.select} selectedValue={selectedcampanha}
-                    onValueChange={(itemValue, itemIndex) =>
-                      setSelectedCampanha(itemValue)
-                    }>
-              <Picker.Item label="Selecione a campanha..." value="" />
-              {listacampanhas.map((item, index) => (
-                <Picker.Item label={item.nom_campanha} value={item.cod_campanha} key={index} />
-              ))}
-            </Picker>
-          )
-        ))}
-        <TextInput
-          underlineColor="transparent"
-          mode="outlined"
-          label="Cep"
-          keyBoardType="phone-pad"
-          value={cep}
-          onChangeText={(t) => setCep(t)}
-          theme={theme}
-          onBlur={handleCep}
-          style={[styles.mText]}
-          render={(props) => (
-            <TextInputMask
-              {...props}
-              value={cep}
-              type={'zip-code'}
-              onChangeText={(text) => setCep(text)}
-            />
-          )}
-        />
-        <TextInput
-          mode="outlined"
-          label="Endereco"
-          keyBoardType="text"
-          value={viacep?.logradouro}
-          onChangeText={(t) => setEndereco(t)}
-          theme={theme}
-          style={[styles.mText]}
-        />
+
+        <View style={styles.picker}>
+          <RNPickerSelect
+            value={estadocivil}
+            placeholder={{ label: "Estado Civil...", value: "I" }}
+            useNativeAndroidPickerStyle={false}
+            onValueChange={(value: String) => {
+              setEstadoCivil(value);
+            }}
+            items={[
+              { label: "Solteiro", value: "S" },
+              { label: "Casado", value: "C" },
+              { label: "Viúva", value: "V" },
+              { label: "Separado", value: "A" },
+              { label: "Divorciado", value: "D" },
+              { label: "Namorado", value: "N" },
+              { label: "Noivo", value: "O" },
+            ]} />
+          {mensagem?.estado_civil &&
+            <C.Erro>{mensagem?.estado_civil}</C.Erro>
+          }
+        </View>
+
+        <View style={styles.picker}>
+          <Picker selectedValue={sexo}
+                  onValueChange={(value: String) =>
+                    setSexo(value)
+                  }>
+            <Picker.Item label="Selecione o seu gênero" value="" />
+            <Picker.Item label="Feminino" value="F" />
+            <Picker.Item label="Masculino" value="M" />
+          </Picker>
+          {mensagem?.sexo &&
+            <C.Erro>{mensagem?.sexo}</C.Erro>
+          }
+        </View>
+
         <TextInput
           mode="outlined"
           label="bairro"
           keyBoardType="text"
-          value={viacep?.bairro}
+          value={bairro}
           onChangeText={(t) => setBairro(t)}
           theme={theme}
           style={[styles.mText]}
         />
-        <TextInput
-          mode="outlined"
-          keyBoardType="numeric"
-          label="Numero"
-          value={numero}
-          onChangeText={(t) => setNumero(t)}
-          theme={theme}
-          style={[styles.mText]}
-          render={(props) => (
-            <TextInputMask
-              {...props}
-              value={idade}
-              type="only-numbers"
-              onChangeText={(text) => setIdade(text)}
-            />
-          )}
-        />
-        <TextInput
-          mode="outlined"
-          label="Complemento"
-          value={complemento}
-          onChangeText={(t) => setComplemento(t)}
-          theme={theme}
-          style={[styles.mText]}
-        />
-        <TextInput
-          mode="outlined"
-          label="cidade"
-          value={viacep?.localidade}
-          onChangeText={(t) => setLocalidade(t)}
-          theme={theme}
-          style={[styles.mText]}
-        />
-        <TextInput
-          mode="outlined"
-          label="uf"
-          value={viacep?.uf}
-          onChangeText={(t) => setUf(t)}
-          theme={theme}
-          style={[styles.mText]}
-        />
+
+        <View style={styles.picker}>
+          {exibeCampo.map((item, index) => (
+            (item.nom_campo === "culto" && item.status === "1" &&
+              <Picker selectedValue={selectedculto}
+                      onValueChange={(value: String ) =>
+                        setSelectedCulto(value)
+                      }>
+                <Picker.Item label="Selecione o dia do culto" value="" />
+                {listacultos.map((item, index) => (
+                  <Picker.Item
+                    label={item.nom_culto + " - " + funcao.diaCulto(item.dia_culto) + " - " + funcao.periodo(item.ind_periodo)}
+                    value={item.cod_culto}
+                    key={index} />
+                ))}
+              </Picker>
+            )
+          ))}
+          {mensagem?.culto &&
+            <C.Erro>{mensagem?.culto}</C.Erro>
+          }
+        </View>
+
+        {exibeCampo.map((item, index) => (
+          (item.nom_campo === "campanha" && item.status === "1" &&
+            <View style={styles.picker}>
+              <Picker selectedValue={selectedcampanha}
+                      onValueChange={(value: String) =>
+                        setSelectedCampanha(value)
+                      }>
+                <Picker.Item label="Selecione a campanha" value="" />
+                {listacampanhas.map((item, index) => (
+                  <Picker.Item label={item.nom_campanha} value={item.cod_campanha} key={index} />
+                ))}
+              </Picker>
+            </View>
+          )))}
+        {mensagem?.campanha &&
+          <C.Erro>{mensagem?.campanha}</C.Erro>
+        }
+
+        <View style={styles.picker}>
+          <Picker selectedValue={membroigreja} placeholder=""
+                  onValueChange={(value: String) =>
+                    setMembroIgreja(value)
+                  }>
+            <Picker.Item label="Membro de uma igreja?" value="" />
+            <Picker.Item label="Sim" value="S" />
+            <Picker.Item label="Não" value="N" />
+          </Picker>
+          {mensagem?.membro_igreja &&
+            <C.Erro>{mensagem?.membro_igreja}</C.Erro>
+          }
+        </View>
+        {membroigreja === "S" &&
+          <TextInput
+            label="Qual Igreja?"
+            mode="outlined"
+            keyBoardType="text"
+            value={igreja}
+            style={[styles.mText]}
+            theme={theme}
+            multiline={true}
+            onChangeText={t => setIgreja(t)}
+          />
+        }
+
         <C.ButtonArea onPress={handleCadastroButton}>
           <C.ButtonText style={styles.font}>CADASTRAR</C.ButtonText>
         </C.ButtonArea>
@@ -357,16 +313,21 @@ export default () => {
 
 const styles = StyleSheet.create({
   mText: {
-    marginBottom: 15,
-    backgroundColor:'#FFF',
+    marginBottom: 20,
+    backgroundColor: "#FFF",
+    borderRadius: 8,
+    color: "#F4F4F4",
   },
-});
-
-const picker = StyleSheet.create({
-  select: {
-    marginBottom: 15,
-    borderRadius: 5,
-    backgroundColor: "#E4E4E4",
-    color: "#676767",
+  mTextDisplay: {
+    marginBottom: 20,
+    backgroundColor: "#FFF",
+    display: "none",
+  },
+  picker: {
+    marginBottom: 20,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#E4E4E4",
+    color: "#000",
   },
 });

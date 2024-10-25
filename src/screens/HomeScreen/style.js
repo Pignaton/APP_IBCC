@@ -4,7 +4,8 @@ export default {
   Container: styled.SafeAreaView`
     flex: 1;
     padding: 20px;
-    background-color: #FFF; //#F5F6FA
+    background-color: #FFF;
+    font-family: Roboto-Bold;
   `,
   Logo: styled.Image`
     width: 250px;
@@ -28,24 +29,21 @@ export default {
   Paragrafo: styled.Text`
     margin-bottom: 5px;
     margin-left:15px;
-    color: #55A1DC;
+    color: #7c04e4;
     font-size: 25px;
-    font-family: Fredoka-Bold;
   `,
   Span: styled.Text`
     text-align: center;
     font-size: 25px;
-    color: #55A1DC;
-    font-family: Fredoka-Bold;
+    color: #7c04e4;
   `,
   SubTexto: styled.Text`
     color: #A7A7A7;
     padding-top: 20px;
     text-align: justify;
-    font-family: Roboto-Bold;
   `,
   ButtonArea: styled.TouchableOpacity`
-    background-color: #55A1DC;
+    background-color: #7c04e4;
     padding: 20px;
     justify-content: center;
     align-items: center;
@@ -58,7 +56,7 @@ export default {
     font-weight: bold;
   `,
   ButtonTextC: styled.Text`
-    color: #55A1DC;
+    color: #7c04e4;
     font-size: 15px;
     font-weight: bold;
   `,
@@ -69,7 +67,7 @@ export default {
     align-items: center;
     border-radius: 8px;
     margin-bottom: 15px;
-    border-width: 1;
-    border-color: #55A1DC;
+    border-width: 1px;
+    border-color: #7c04e4;
   `,
 };

@@ -1,4 +1,5 @@
 import React from "react";
+import api from "../services/api";
 
 export default {
 
@@ -53,7 +54,7 @@ export default {
   estadoCivil: (param) => {
     switch (param) {
       case "N":
-        param = "Não informado";
+        param = "Namorando";
         break;
       case "S":
         param = "Solteiro(a)";
@@ -69,6 +70,9 @@ export default {
         break;
       case "D":
         param = "Divorciado(a)";
+        break;
+      case "O":
+        param = "Noivo(a)";
         break;
       default:
         param = "Não informado";
@@ -106,7 +110,7 @@ export default {
         param = "Misto";
         break;
       default:
-        param = 'Não informado';
+        param = "Não informado";
     }
     return param;
   },

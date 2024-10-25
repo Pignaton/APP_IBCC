@@ -12,21 +12,23 @@ import IndexScreen from "../screens/InformacaoVisitanteScreen/";
 import MainDrawer from "./MainDrawer";
 
 const Stack = createNativeStackNavigator();
+
 //const navigation = useNavigation();
 export default () => {
   return (
     <Stack.Navigator
+      initialRouteName='Prelaod'
       screenOptions={({navigation}) => ({
         headerStyle: {
-          backgroundColor: '#FFF', //#F5F6FA
+          backgroundColor: '#FFF',
         },
-        headerTintColor: '#FFF',
+        headerTintColor: '#000',
         headerTitleStyle: {
           fontWeight: 'bold',
         },
-        headerLeft: () => (
+       /*headerLeft: () => (
           <Icon name="angle-left" size={45} color="#55A1DC" onPress={() => navigation.goBack()} />
-        ),
+        ),*/
       })}>
       <Stack.Screen
         name="PreloadScreen"
@@ -41,7 +43,7 @@ export default () => {
       <Stack.Screen
         name="LoginScreen"
         component={LoginScreen}
-        options={{ headerShown: true, headerShadowVisible: false }}
+        options={{ headerShown: false, headerShadowVisible: false }}
       />
       <Stack.Screen
         name="RecuperaSenhaScreen"
@@ -66,7 +68,7 @@ export default () => {
       <Stack.Screen
         name="IndexScreen"
         component={IndexScreen}
-        options={{ headerShown: false }}
+        options={{ headerShown: true }}
       />
     </Stack.Navigator>
   );

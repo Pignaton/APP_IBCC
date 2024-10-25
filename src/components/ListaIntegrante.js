@@ -49,7 +49,6 @@ export default ({ person }) => {
               icon="account"
               style={{
                 backgroundColor: "#FFF",
-                borderWidth: 1,
                 borderColor: "#ecf0f1",
               }}
             />
